@@ -113,7 +113,16 @@ function highlightSQL(sql) {
 
 function Terminal() {
     const [input, setInput] = useState("");
-    const [output, setOutput] = useState([]);
+    const [output, setOutput] = useState([
+        {
+            type: "comment",
+            text: `-- SQL Playground
+-- Built with ❤ by Saif
+-- If you find a bug or have a suggestion,
+-- please report it at: saif_00749 
+-- Happy querying!`,
+        },
+    ]);
     const [history, setHistory] = useState([]);
     const [historyIndex, setHistoryIndex] = useState(-1);
     const [ready, setReady] = useState(false);
@@ -592,7 +601,7 @@ Execution time: ${executionTime} ms`
     // --------------------------------
 
     return (
-        <div className="h-[100svh] w-screen bg-[#08090b] text-gray-200 font-mono flex flex-col overflow-hidden">
+        <div className="h-[100svh] w-screen bg-[#08090B] text-[#E6EDF3] font-mono flex flex-col overflow-hidden">
 
             {/* HEADER */}
 
@@ -625,7 +634,7 @@ Execution time: ${executionTime} ms`
                             >
                                 <div className="flex items-start gap-2 min-w-0">
 
-                                    <span className="text-emerald-400 font-semibold select-none shrink-0 text-[20px] leading-9">
+                                    <span className="text-[#00E676] font-semibold select-none shrink-0 text-[20px] leading-9">
                                         mysql&gt;
                                     </span>
 
@@ -656,7 +665,7 @@ Execution time: ${executionTime} ms`
                         return (
                             <pre
                                 key={index}
-                                className="m-0 mb-5 whitespace-pre-wrap break-words text-[20px] leading-9 text-red-400"
+                                className="m-0 mb-5 whitespace-pre-wrap break-words text-[20px] leading-9 text-[#FF5C7A]"
                             >
                                 {item.text}
                             </pre>
@@ -670,7 +679,7 @@ Execution time: ${executionTime} ms`
                         return (
                             <pre
                                 key={index}
-                                className="m-0 mb-5 whitespace-pre-wrap break-words text-[20px] leading-9 text-emerald-400"
+                                className="m-0 mb-5 whitespace-pre-wrap break-words text-[20px] leading-9 text-[#5EE6A8]"
                             >
                                 {item.text}
                             </pre>
@@ -684,7 +693,7 @@ Execution time: ${executionTime} ms`
                                 className="mb-5 max-w-full overflow-x-auto scrollbar-thin scrollbar-thumb-[#30343b]"
                             >
                                 <pre
-                                    className="m-0 w-max min-w-full whitespace-pre text-[20px] leading-9 text-gray-300"
+                                    className="m-0 w-max min-w-full whitespace-pre text-[20px] leading-9 text-[#E6EDF3]"
                                 >
                                     {item.text}
                                 </pre>
@@ -723,7 +732,7 @@ Execution time: ${executionTime} ms`
 
                 <div className="flex items-start gap-2 text-[20px] leading-9 md:text-sm md:leading-6 min-w-0">
 
-                    <span className="text-emerald-400 font-semibold select-none text-[20px] leading-9">
+                    <span className="text-[#00E676] font-semibold select-none text-[20px] leading-9">
                         mysql&gt;
                     </span>
 
