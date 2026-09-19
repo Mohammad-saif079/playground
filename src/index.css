@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+.sql-keyword {
+    color: #569cd6;
+}
+
+.sql-string {
+    color: #ce9178;
+}
+
+.sql-number {
+    color: #b5cea8;
+}
+
+.sql-comment {
+    color: #6a9955;
+}
