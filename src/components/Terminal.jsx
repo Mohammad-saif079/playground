@@ -83,7 +83,7 @@ function highlightSQL(sql) {
     const escaped = escapeHTML(sql);
 
     const tokenRegex =
-        /(--[^\n]*|'(?:''|[^'])*'|"(?:[""]|[^"])*"|\b\d+(?:\.\d+)?\b|\b(?:SELECT|FROM|WHERE|INSERT|INTO|VALUES|UPDATE|SET|DELETE|CREATE|TABLE|ALTER|DROP|INDEX|JOIN|INNER|LEFT|RIGHT|FULL|OUTER|ON|AS|AND|OR|NOT|NULL|IS|LIKE|IN|BETWEEN|GROUP|BY|ORDER|ASC|DESC|HAVING|LIMIT|OFFSET|DISTINCT|UNION|ALL|CASE|WHEN|THEN|ELSE|END|PRIMARY|KEY|FOREIGN|REFERENCES|DEFAULT|UNIQUE|CHECK|AUTOINCREMENT|COUNT|SUM|AVG|MIN|MAX)\b)/gi;
+        /(--[^\n]*|'(?:''|[^'])*'|"(?:[""]|[^"])*"|\b\d+(?:\.\d+)?\b|\b(?:SELECT|FROM|WHERE|INSERT|INTO|VALUES|UPDATE|SET|DELETE|CREATE|TABLE|ALTER|DROP|INDEX|JOIN|INNER|LEFT|RIGHT|FULL|OUTER|ON|AS|AND|OR|NOT|NULL|IS|LIKE|IN|BETWEEN|GROUP|BY|ORDER|ASC|DESC|HAVING|LIMIT|OFFSET|DISTINCT|UNION|ALL|CASE|WHEN|THEN|ELSE|END|PRIMARY|KEY|FOREIGN|REFERENCES|DEFAULT|UNIQUE|CHECK|AUTOINCREMENT|COUNT|SHOW|SUM|AVG|MIN|MAX)\b)/gi;
 
     return escaped.replace(tokenRegex, (token) => {
 
@@ -116,11 +116,11 @@ function Terminal() {
     const [output, setOutput] = useState([
         {
             type: "comment",
-            text: `-- SQL Playground
--- Built with ❤ by Saif
--- If you find a bug or have a suggestion,
--- please report it at: saif_00749 
--- Happy querying!`,
+            text: `# SQL Playground
+# Built with ❤ by Saif
+# Found a bug? Report it on Instagram
+# @saif_00749
+`,
         },
     ]);
     const [history, setHistory] = useState([]);
@@ -196,27 +196,23 @@ function Terminal() {
     // --------------------------------
     // HELP
     // --------------------------------
-
     function showHelp() {
         addOutput(
             "help",
-            `
-SQL Playground
+            `SQL PLAYGROUND
 
-SQL commands:
-
+SQL
   SELECT
   INSERT
   UPDATE
   DELETE
-
   CREATE TABLE
   ALTER TABLE
   DROP TABLE
-
   CREATE INDEX
   DROP INDEX
 
+CLAUSES
   JOIN
   GROUP BY
   ORDER BY
@@ -225,31 +221,14 @@ SQL commands:
   DISTINCT
   UNION
 
-  Subqueries
-  Aggregate functions
-
-Terminal commands:
-
+TERMINAL
   help;
   clear;
   tables;
   schema;
 
-Examples:
-
-  SELECT * FROM users;
-
-  SELECT name, age
-  FROM users
-  WHERE age > 18;
-
-  SELECT city, COUNT(*)
-  FROM users
-  GROUP BY city;
-
-  UPDATE users
-  SET city = 'Ranchi'
-  WHERE id = 1;
+Example:
+  SELECT * FROM scouts;
 `
         );
     }

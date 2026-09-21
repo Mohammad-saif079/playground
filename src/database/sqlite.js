@@ -36,21 +36,6 @@ export async function initDatabase() {
         // ----------------------------------------------------
         // OPEN PERSISTENT SQLITE DATABASE
         // ----------------------------------------------------
-        //
-        // "local" means:
-        //
-        // SQLite database
-        //       ↓
-        // kvvfs
-        //       ↓
-        // browser localStorage
-        //
-        // It survives page refresh and browser restart.
-        //
-        // No service worker.
-        // No OPFS.
-        // No Worker required.
-        // ----------------------------------------------------
 
         db = new sqlite3.oo1.JsStorageDb("local");
 
@@ -64,7 +49,7 @@ export async function initDatabase() {
                 SELECT name
                 FROM sqlite_master
                 WHERE type = 'table'
-                AND name = 'users';
+                AND name = 'scouts';
             `,
             rowMode: "object",
             returnValue: "resultRows",
@@ -72,36 +57,59 @@ export async function initDatabase() {
 
 
         // ----------------------------------------------------
-        // CREATE STARTER DATABASE ONLY ON FIRST RUN
-        // ----------------------------------------------------
-        //
-        // IMPORTANT:
-        //
-        // We DO NOT run this every time.
-        //
-        // Otherwise user data would be overwritten/recreated
-        // after every refresh.
+        // CREATE AOT STARTER DATABASE
         // ----------------------------------------------------
 
         if (tables.length === 0) {
 
             db.exec(`
-                CREATE TABLE users (
+                CREATE TABLE scouts (
                     id INTEGER PRIMARY KEY,
                     name TEXT NOT NULL,
-                    email TEXT UNIQUE,
-                    age INTEGER,
-                    city TEXT
+                    rank TEXT NOT NULL,
+                    division TEXT NOT NULL,
+                    titan_kills INTEGER DEFAULT 0,
+                    status TEXT DEFAULT 'Active'
                 );
 
-                INSERT INTO users
-                    (name, email, age, city)
+                INSERT INTO scouts
+                    (name, rank, division, titan_kills, status)
                 VALUES
-                    ('Saifu', 'saifu@example.com', 18, 'Patna'),
-                    ('Rahul', 'rahul@example.com', 21, 'Delhi'),
-                    ('Aman', 'aman@example.com', 20, 'Mumbai'),
-                    ('Priya', 'priya@example.com', 22, 'Kolkata'),
-                    ('Arjun', 'arjun@example.com', 19, 'Bangalore');
+                    (
+                        'Eren Yeager',
+                        'Soldier',
+                        'Survey Corps',
+                        3,
+                        'Active'
+                    ),
+                    (
+                        'Mikasa Ackerman',
+                        'Captain',
+                        'Survey Corps',
+                        18,
+                        'Active'
+                    ),
+                    (
+                        'Armin Arlert',
+                        'Commander',
+                        'Survey Corps',
+                        2,
+                        'Active'
+                    ),
+                    (
+                        'Levi Ackerman',
+                        'Captain',
+                        'Special Operations',
+                        58,
+                        'Active'
+                    ),
+                    (
+                        'Erwin Smith',
+                        'Commander',
+                        'Survey Corps',
+                        0,
+                        'Deceased'
+                    );
             `);
         }
 
@@ -179,35 +187,67 @@ export function resetDatabase() {
     }
 
 
-    // Completely remove the persistent database
+    // Remove persistent database
     db.clearStorage();
 
-
-    // Reopen a fresh database
+    // Close current database
     db.close();
 
+    // Reopen fresh database
     db = new sqlite3.oo1.JsStorageDb("local");
 
 
-    // Create starter database again
+    // Recreate AOT starter database
     db.exec(`
-        CREATE TABLE users (
+        CREATE TABLE scouts (
             id INTEGER PRIMARY KEY,
             name TEXT NOT NULL,
-            email TEXT UNIQUE,
-            age INTEGER,
-            city TEXT
+            rank TEXT NOT NULL,
+            division TEXT NOT NULL,
+            titan_kills INTEGER DEFAULT 0,
+            status TEXT DEFAULT 'Active'
         );
 
-        INSERT INTO users
-            (name, email, age, city)
+        INSERT INTO scouts
+            (name, rank, division, titan_kills, status)
         VALUES
-            ('Saifu', 'saifu@example.com', 18, 'Patna'),
-            ('Rahul', 'rahul@example.com', 21, 'Delhi'),
-            ('Aman', 'aman@example.com', 20, 'Mumbai'),
-            ('Priya', 'priya@example.com', 22, 'Kolkata'),
-            ('Arjun', 'arjun@example.com', 19, 'Bangalore');
+            (
+                'Eren Yeager',
+                'Soldier',
+                'Survey Corps',
+                3,
+                'Active'
+            ),
+            (
+                'Mikasa Ackerman',
+                'Captain',
+                'Survey Corps',
+                18,
+                'Active'
+            ),
+            (
+                'Armin Arlert',
+                'Commander',
+                'Survey Corps',
+                2,
+                'Active'
+            ),
+            (
+                'Levi Ackerman',
+                'Captain',
+                'Special Operations',
+                58,
+                'Active'
+            ),
+            (
+                'Erwin Smith',
+                'Commander',
+                'Survey Corps',
+                0,
+                'Deceased'
+            );
     `);
+
 
     return db;
 }
