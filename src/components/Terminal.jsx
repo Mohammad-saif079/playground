@@ -116,10 +116,9 @@ function Terminal() {
     const [output, setOutput] = useState([
         {
             type: "comment",
-            text: `# SQL Playground
-# Built with ❤ by Saif
-# Found a bug? Report it on Instagram
-# @saif_00749
+            text: `-- Onilne SQL Terminal
+-- Run SQL Instantly in Your Browser 
+-- Built by Saif
 `,
         },
     ]);
@@ -198,7 +197,7 @@ function Terminal() {
     // --------------------------------
     function showHelp() {
         addOutput(
-            "help",
+            "comment",
             `SQL PLAYGROUND
 
 SQL
@@ -690,7 +689,7 @@ Execution time: ${executionTime} ms`
                         return (
                             <pre
                                 key={index}
-                                className="m-0 mb-5 whitespace-pre-wrap text-[20px] leading-9 text-gray-400"
+                                className="m-0 mb-5 whitespace-pre-wrap text-[20px] leading-9 text-gray-500"
                             >
                                 {item.text}
                             </pre>
